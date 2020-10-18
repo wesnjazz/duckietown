@@ -19,19 +19,39 @@ while True:
     cropped_frame = frame[ROI_left_upper[1]:, :, :]
     HSV_frame = cv2.cvtColor(cropped_frame, cv2.COLOR_BGR2HSV)
 
-    sensitivity = 120
-    lower_white = np.array([0, 0, 255-sensitivity])
-    upper_white = np.array([255, sensitivity, 255])
+    lower_white = np.array([0, 0, 200])
+    upper_white = np.array([179, 30, 255])
     mask_white = cv2.inRange(HSV_frame, lower_white, upper_white)
     res_white = cv2.bitwise_and(cropped_frame, cropped_frame, mask=mask_white)
 
+    lower_yellow = np.array([20, 70, 100])
+    upper_yellow = np.array([30, 255, 255])
+    mask_yellow = cv2.inRange(HSV_frame, lower_yellow, upper_yellow)
+    res_yellow = cv2.bitwise_and(cropped_frame, cropped_frame, mask=mask_yellow)
+
+    lower_red1 = np.array([0, 70, 100])
+    upper_red1 = np.array([10, 255, 255])
+    mask_red1 = cv2.inRange(HSV_frame, lower_red1, upper_red1)
+    lower_red2 = np.array([170, 70, 100])
+    upper_red2 = np.array([179, 255, 255])
+    mask_red2 = cv2.inRange(HSV_frame, lower_red2, upper_red2)
+    res_red1 = cv2.bitwise_and(cropped_frame, cropped_frame, mask=mask_red1)
+    res_red2 = cv2.bitwise_and(cropped_frame, cropped_frame, mask=mask_red2)
+    res_red = res_red1 + res_red2
+
+
     # cv2.imshow('frame', frame)
     # cv2.imshow('cropped_frame', cropped_frame)
-    cv2.imshow('frame', res_white)
-
+    cv2.imshow('white', res_white)
+    cv2.imshow('yellow', res_yellow)
+    cv2.imshow('red', res_red)
+    cv2.imshow('frame', cropped_frame)
 
     if cv2.waitKey(1) == ord('q'):
-        out = cv2.imwrite('capture.jpg', HSV_frame)
+        out = cv2.imwrite('capture_white.jpg', res_white)
+        out = cv2.imwrite('capture_yellow.jpg', res_yellow)
+        out = cv2.imwrite('capture_red.jpg', res_red)
+        out = cv2.imwrite('capture_original.jpg', cropped_frame)
         break
 
 cap.release()

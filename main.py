@@ -23,7 +23,8 @@ while True:
     # cv2.imshow('cropped_frame', cropped_frame)
     cv2.imshow('frame', HSV_frame)
 
-
+    if cv2.waitKey(1) == ord('c'):
+        out = cv2.imwrite('capture.jpg', HSV_frame)
     if cv2.waitKey(1) == ord('q'):
         break
 

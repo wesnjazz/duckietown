@@ -19,14 +19,19 @@ while True:
     cropped_frame = frame[ROI_left_upper[1]:, :, :]
     HSV_frame = cv2.cvtColor(cropped_frame, cv2.COLOR_BGR2HSV)
 
+    sensitivity = 120
+    lower_white = np.array([0, 0, 255-sensitivity])
+    upper_white = np.array([255, sensitivity, 255])
+    mask_white = cv2.inRange(HSV_frame, lower_white, upper_white)
+    res_white = cv2.bitwise_and(cropped_frame, cropped_frame, mask=mask_white)
+
     # cv2.imshow('frame', frame)
     # cv2.imshow('cropped_frame', cropped_frame)
-    cv2.imshow('frame', HSV_frame)
+    cv2.imshow('frame', res_white)
 
-    if cv2.waitKey(1) == ord('c'):
-        out = cv2.imwrite('capture.jpg', HSV_frame)
-        break
+
     if cv2.waitKey(1) == ord('q'):
+        out = cv2.imwrite('capture.jpg', HSV_frame)
         break
 
 cap.release()

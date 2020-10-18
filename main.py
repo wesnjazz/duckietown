@@ -39,19 +39,22 @@ while True:
     res_red2 = cv2.bitwise_and(cropped_frame, cropped_frame, mask=mask_red2)
     res_red = res_red1 + res_red2
 
+    res_white_yellow_red = res_white + res_yellow + res_red
 
     # cv2.imshow('frame', frame)
     # cv2.imshow('cropped_frame', cropped_frame)
-    cv2.imshow('white', res_white)
-    cv2.imshow('yellow', res_yellow)
-    cv2.imshow('red', res_red)
-    cv2.imshow('frame', cropped_frame)
+    # cv2.imshow('white', res_white)
+    # cv2.imshow('yellow', res_yellow)
+    # cv2.imshow('red', res_red)
+    # cv2.imshow('frame', cropped_frame)
+    cv2.imshow('res_white_yellow_red', res_white_yellow_red)
 
     if cv2.waitKey(1) == ord('q'):
-        out = cv2.imwrite('capture_white.jpg', res_white)
-        out = cv2.imwrite('capture_yellow.jpg', res_yellow)
-        out = cv2.imwrite('capture_red.jpg', res_red)
-        out = cv2.imwrite('capture_original.jpg', cropped_frame)
+        # out = cv2.imwrite('capture_white.jpg', res_white)
+        # out = cv2.imwrite('capture_yellow.jpg', res_yellow)
+        # out = cv2.imwrite('capture_red.jpg', res_red)
+        # out = cv2.imwrite('capture_original.jpg', cropped_frame)
+        out = cv2.imwrite('res_white_yellow_red.jpg', res_white_yellow_red)
         break
 
 cap.release()

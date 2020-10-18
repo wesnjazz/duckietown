@@ -25,6 +25,7 @@ while True:
 
     if cv2.waitKey(1) == ord('c'):
         out = cv2.imwrite('capture.jpg', HSV_frame)
+        break
     if cv2.waitKey(1) == ord('q'):
         break
 
